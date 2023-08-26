@@ -29,6 +29,10 @@
             color: #29166F;
             border-radius: 10px;
         }
+
+        #addSubjectBtn:hover {
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -66,7 +70,8 @@
         <p style="color: #29166F; ">Online Application for National Diploma Post UTME Full-time</p>
     </div>
     <main class="container">
-        <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-white border border-light-subtle border-2 border-opacity-10">
+        <div
+            class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-white border border-light-subtle border-2 border-opacity-10">
             <form class="row g-3 needs-validation" novalidate>
                 <div class="row mb-5">
                     <div class="mb-3">
@@ -76,7 +81,7 @@
                     <div class="col-md-3">
                         <label for="jambNumber" class="form-label fw-medium">Jamb Number</label>
                         <input type="text" class="form-control bg-light" id="jambNumber"
-                            placeholder="Enter Jamb Number" required>
+                            placeholder="Enter Jamb Number" name="jamb_number" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -86,11 +91,11 @@
                     </div>
                     <div class="col-md-3">
                         <label for="jambYear" class="form-label fw-medium">Jamb Year</label>
-                        <select class="form-select bg-light" id="jambYear" required>
+                        <select class="form-select bg-light" id="jambYear" name="jamb_year" required>
                             <option selected disabled value="">Select year</option>
-                            <option value="2023">2023</option>
-                            <option value="2022">2022</option>
-                            <option value="2021">2021</option>
+                            @for ($i = 1980; $i <= date('Y'); $i++)
+                                <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
                         </select>
                         <div class="valid-feedback">
                             Looks good!
@@ -101,11 +106,11 @@
                     </div>
                     <div class="col-md-3">
                         <label for="courseOfStudy" class="form-label fw-medium">Proposed Course of Study</label>
-                        <select class="form-select bg-light" id="courseOfStudy" required>
+                        <select class="form-select bg-light" id="courseOfStudy" name="course_of_study" required>
                             <option selected disabled value="">Select Course</option>
-                            <option value="Computer Science">Computer Science</option>
-                            <option value="Anatomy">Anatomy</option>
-                            <option value="Ophthalmology">Ophthalmology</option>
+                            @foreach ($courseOfStudies as $courseOfStudy)
+                                <option value="{{ $courseOfStudy->name }}">{{ $courseOfStudy->display_name }}</option>
+                            @endforeach
                         </select>
                         <div class="valid-feedback">
                             Looks good!
@@ -124,7 +129,7 @@
                     <div class="col-md-3 mb-5">
                         <label for="surname" class="form-label fw-medium">Surname</label>
                         <input type="text" class="form-control bg-light" id="surname" placeholder="Enter Surname"
-                            required>
+                            name="surname" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -135,7 +140,7 @@
                     <div class="col-md-3 mb-5">
                         <label for="firstName" class="form-label fw-medium">First Name</label>
                         <input type="text" class="form-control bg-light" id="firstName"
-                            placeholder="Enter First Name" required>
+                            placeholder="Enter First Name" name="first_name" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -146,7 +151,7 @@
                     <div class="col-md-3 mb-5">
                         <label for="middleName" class="form-label fw-medium">Middle Name</label>
                         <input type="text" class="form-control bg-light" id="middleName"
-                            placeholder="Enter Middle Name" required>
+                            placeholder="Enter Middle Name" name="middle_name" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -159,7 +164,7 @@
                     <div class="col-md-3 mb-5">
                         <label for="email" class="form-label fw-medium">Email Address</label>
                         <input type="email" class="form-control bg-light" id="email"
-                            placeholder="Enter Email Address" required>
+                            placeholder="Enter Email Address" name="email" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -169,10 +174,11 @@
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="gender" class="form-label fw-medium">Gender</label>
-                        <select class="form-select bg-light" id="gender" required>
+                        <select class="form-select bg-light" id="gender" name="gender" required>
                             <option selected disabled value="">Select Gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
+                            @foreach ($genders as $gender)
+                                <option value="{{ $gender->name }}">{{ $gender->display_name }}</option>
+                            @endforeach
                         </select>
                         <div class="valid-feedback">
                             Looks good!
@@ -184,7 +190,7 @@
                     <div class="col-md-3 mb-5">
                         <label for="phoneNumber" class="form-label fw-medium">Phone Number</label>
                         <input type="tel" class="form-control bg-light" id="phoneNumber"
-                            placeholder="Enter Phone Number" required>
+                            placeholder="Enter Phone Number" name="phone_number" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -196,10 +202,11 @@
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="nationality" class="form-label fw-medium">Nationality</label>
-                        <select class="form-select bg-light" id="nationality" required>
+                        <select class="form-select bg-light" id="nationality" name="nationality" required>
                             <option selected disabled value="">Select Country</option>
-                            <option value="Nigeria">Nigeria</option>
-                            <option value="Ghana">Ghana</option>
+                            @foreach ($nationalities as $nationality)
+                                <option value="{{ $nationality->country_name }}">{{ $nationality->country_display_name }}</option>
+                            @endforeach
                         </select>
                         <div class="valid-feedback">
                             Looks good!
@@ -210,10 +217,8 @@
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="state" class="form-label fw-medium">State</label>
-                        <select class="form-select bg-light" id="state" required>
+                        <select class="form-select bg-light" id="state" name="state" required>
                             <option selected disabled value="">Select State</option>
-                            <option value="Kano">Kano</option>
-                            <option value="Kwara">Kwara</option>
                         </select>
                         <div class="valid-feedback">
                             Looks good!
@@ -296,24 +301,27 @@
                         <label for="day" class="form-label fw-medium">Date of Birth</label>
                         <div class="row g-3">
                             <div class="col-auto">
-                                <select class="form-select bg-light" id="day" required>
+                                <select class="form-select bg-light" id="day" name="day" required>
                                     <option selected disabled value="">Day</option>
-                                    <option value="01">01</option>
-                                    <option value="02">02</option>
+                                    @for ($i = 1; $i <= 31; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
                                 </select>
                             </div>
                             <div class="col-auto">
-                                <select class="form-select bg-light" id="month" required>
+                                <select class="form-select bg-light" id="month" name="month" required>
                                     <option selected disabled value="">Month</option>
-                                    <option value="01">01</option>
-                                    <option value="02">02</option>
+                                    @for ($i = 1; $i <= 12; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
                                 </select>
                             </div>
                             <div class="col-auto">
-                                <select class="form-select bg-light" id="year" required>
+                                <select class="form-select bg-light" id="year" name="year" required>
                                     <option selected disabled value="">Year</option>
-                                    <option value="01">01</option>
-                                    <option value="02">02</option>
+                                    @for ($i = 1980; $i <= date('Y'); $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
                                 </select>
                             </div>
                         </div>
@@ -333,11 +341,11 @@
                     </div>
                     <div class="col-md-3">
                         <label for="examinationType" class="form-label fw-medium">Examination Type</label>
-                        <select class="form-select bg-light" id="examinationType" required>
+                        <select class="form-select bg-light" id="examinationType" name="examination_type" required>
                             <option selected disabled value="">Select Examination</option>
-                            <option value="WAEC">WAEC</option>
-                            <option value="NECO">NECO</option>
-                            <option value="NABTEB">NABTEB</option>
+                            @foreach ($examTypes as $examType)
+                                <option value="{{ $examType->name }}">{{ $examType->display_name }}</option>
+                            @endforeach
                         </select>
                         <div class="valid-feedback">
                             Looks good!
@@ -348,11 +356,11 @@
                     </div>
                     <div class="col-md-3">
                         <label for="examinationYear" class="form-label fw-medium">Exam Year</label>
-                        <select class="form-select bg-light" id="examinationYear" required>
+                        <select class="form-select bg-light" id="examinationYear" name="examination_year" required>
                             <option selected disabled value="">Select year</option>
-                            <option value="2023">2023</option>
-                            <option value="2022">2022</option>
-                            <option value="2021">2021</option>
+                            @for ($i = 1990; $i <= date('Y'); $i++)
+                                <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
                         </select>
                         <div class="valid-feedback">
                             Looks good!
@@ -381,7 +389,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="subject" class="form-label fw-medium">Subject</label>
-                        <input type="text" class="form-control bg-light" id="subject"
+                        <input type="text" class="form-control bg-light" name="subject" id="subject"
                             placeholder="Enter Subject" required>
                         <div class="valid-feedback">
                             Looks good!
@@ -392,8 +400,8 @@
                     </div>
                     <div class="col-md-3">
                         <label for="grade" class="form-label fw-medium">Grade</label>
-                        <input type="text" class="form-control bg-light" id="grade"
-                            placeholder="Enter Grade" required>
+                        <input type="text" class="form-control bg-light" id="grade" name="grade" placeholder="Enter Grade"
+                            required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -401,7 +409,7 @@
                             Grade field required.
                         </div>
                     </div>
-                    <div class="col-md-3 pt-5">
+                    <div class="col-md-3 pt-5" id="addSubjectBtn">
                         <span class="m-0 p-0">
                             <img src="{{ asset('assets/img/gala_add.svg') }}" alt="email icon">
                             Add Subject
@@ -418,7 +426,8 @@
     </main>
 
     <div class="py-5 text-center">
-        <p><img src="{{ asset('assets/img/copyright.svg')}}" alt="copyright"> 2023. All rights reserved | Developed by TECHiT </p>
+        <p><img src="{{ asset('assets/img/copyright.svg') }}" alt="copyright"> 2023. All rights reserved | Developed
+            by TECHiT </p>
     </div>
 
 
@@ -430,6 +439,9 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
         integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous">
     </script>
     <script>
         (() => {
@@ -448,6 +460,25 @@
                 }, false)
             })
         })()
+    </script>
+    <script>
+        $('#nationality').change(function() {
+            var selectedValue = $(this).val()
+            var $state = $('#state');
+            state.innerHTML = `<option selected disabled value="">Select State</option>`
+            var states = {!! json_encode($states) !!}
+            for (var key in states) {
+                if (states.hasOwnProperty(key)) {
+                    var element = states[key];
+                    if (element.country_name == selectedValue) {
+                        var option = document.createElement('option');
+                        option.value = element.state_name;
+                        option.textContent = element.state_display_name;
+                        state.appendChild(option);
+                    }
+                }
+            }
+        });
     </script>
 </body>
 
