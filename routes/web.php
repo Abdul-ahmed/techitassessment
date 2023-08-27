@@ -20,3 +20,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [RegistrationController::class, 'index'])->name('home');
+Route::post('/register', [RegistrationController::class, 'register'])->name('register');

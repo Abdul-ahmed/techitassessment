@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
@@ -69,10 +70,22 @@
     <div class="container mt-5 mb-5">
         <p style="color: #29166F; ">Online Application for National Diploma Post UTME Full-time</p>
     </div>
+
+    @if (session('success'))
+        <div class="container">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> {{ session('success') }}
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
     <main class="container">
         <div
             class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-white border border-light-subtle border-2 border-opacity-10">
-            <form class="row g-3 needs-validation" novalidate>
+            <form class="row g-3 needs-validation" novalidate novalidate action="{{ route('register') }}"
+                method="POST">
+                @csrf
+                <input type="hidden" name="exam_titles_and_scores" id="examTitleAndScore">
                 <div class="row mb-5">
                     <div class="mb-3">
                         <h4 class="fw-bold">Course details</h4>
@@ -88,6 +101,11 @@
                         <div class="invalid-feedback">
                             Jamb number field required.
                         </div>
+                        @error('jamb_number')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3">
                         <label for="jambYear" class="form-label fw-medium">Jamb Year</label>
@@ -103,6 +121,11 @@
                         <div class="invalid-feedback">
                             Please select a valid jamb year.
                         </div>
+                        @error('jamb_year')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3">
                         <label for="courseOfStudy" class="form-label fw-medium">Proposed Course of Study</label>
@@ -118,6 +141,11 @@
                         <div class="invalid-feedback">
                             Please select a valid course of study.
                         </div>
+                        @error('course_of_study')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                 </div>
 
@@ -128,14 +156,19 @@
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="surname" class="form-label fw-medium">Surname</label>
-                        <input type="text" class="form-control bg-light" id="surname" placeholder="Enter Surname"
-                            name="surname" required>
+                        <input type="text" class="form-control bg-light" id="surname"
+                            placeholder="Enter Surname" name="surname" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                         <div class="invalid-feedback">
                             Surname field is required.
                         </div>
+                        @error('surname')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="firstName" class="form-label fw-medium">First Name</label>
@@ -147,6 +180,11 @@
                         <div class="invalid-feedback">
                             First name field is required.
                         </div>
+                        @error('first_name')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="middleName" class="form-label fw-medium">Middle Name</label>
@@ -158,6 +196,11 @@
                         <div class="invalid-feedback">
                             Middle name field is required.
                         </div>
+                        @error('middle_name')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                     </div>
@@ -169,8 +212,13 @@
                             Looks good!
                         </div>
                         <div class="invalid-feedback">
-                            Middle name field is required.
+                            Email address field is required.
                         </div>
+                        @error('email')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="gender" class="form-label fw-medium">Gender</label>
@@ -186,6 +234,11 @@
                         <div class="invalid-feedback">
                             Please select a valid gender.
                         </div>
+                        @error('gender')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="phoneNumber" class="form-label fw-medium">Phone Number</label>
@@ -197,6 +250,11 @@
                         <div class="invalid-feedback">
                             Phone number field is required.
                         </div>
+                        @error('phone_number')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                     </div>
@@ -205,7 +263,8 @@
                         <select class="form-select bg-light" id="nationality" name="nationality" required>
                             <option selected disabled value="">Select Country</option>
                             @foreach ($nationalities as $nationality)
-                                <option value="{{ $nationality->country_name }}">{{ $nationality->country_display_name }}</option>
+                                <option value="{{ $nationality->country_name }}">
+                                    {{ $nationality->country_display_name }}</option>
                             @endforeach
                         </select>
                         <div class="valid-feedback">
@@ -214,6 +273,11 @@
                         <div class="invalid-feedback">
                             Please select a valid country.
                         </div>
+                        @error('nationality')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="state" class="form-label fw-medium">State</label>
@@ -226,69 +290,99 @@
                         <div class="invalid-feedback">
                             Please select a valid state.
                         </div>
+                        @error('state')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="address" class="form-label fw-medium">Permanent Home Address</label>
                         <input type="text" class="form-control bg-light" id="address"
-                            placeholder="Enter Home Address" required>
+                            placeholder="Enter Home Address" name="address" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                         <div class="invalid-feedback">
                             Address field is required.
                         </div>
+                        @error('address')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="sponsorName" class="form-label fw-medium">Full Name of Sponsor</label>
                         <input type="text" class="form-control bg-light" id="sponsorName"
-                            placeholder="Enter Full Name" required>
+                            placeholder="Enter Full Name" name="sponsor_name" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                         <div class="invalid-feedback">
                             Sponsor name field is required.
                         </div>
+                        @error('sponsor_name')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="sponsorEmail" class="form-label fw-medium">Email Address of Sponsor</label>
-                        <input type="text" class="form-control bg-light" id="sponsorEmail"
-                            placeholder="Enter Email Address" required>
+                        <input type="email" class="form-control bg-light" id="sponsorEmail"
+                            placeholder="Enter Email Address" name="sponsor_email" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                         <div class="invalid-feedback">
                             Sponsor email field is required.
                         </div>
+                        @error('sponsor_email')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="relationship" class="form-label fw-medium">Relationship</label>
                         <input type="text" class="form-control bg-light" id="relationship"
-                            placeholder="Enter Relationship" required>
+                            placeholder="Enter Relationship" name="sponsor_relationship" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                         <div class="invalid-feedback">
                             Relationship field is required.
                         </div>
+                        @error('sponsor_relationship')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="religion" class="form-label fw-medium">Religion</label>
                         <input type="text" class="form-control bg-light" id="religion"
-                            placeholder="Enter Religion" required>
+                            placeholder="Enter Religion" name="religion" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                         <div class="invalid-feedback">
                             Religion field is required.
                         </div>
+                        @error('religion')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3 mb-5">
                         <label for="maritalStatus" class="form-label fw-medium">Marital Status</label>
-                        <input type="text" class="form-control bg-light" id="maritalStatus"
+                        <input type="text" class="form-control bg-light" name="marital_status" id="maritalStatus"
                             placeholder="Enter Status" required>
                         <div class="valid-feedback">
                             Looks good!
@@ -296,6 +390,11 @@
                         <div class="invalid-feedback">
                             Marital status field is required.
                         </div>
+                        @error('marital_status')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-4">
                         <label for="day" class="form-label fw-medium">Date of Birth</label>
@@ -329,7 +428,7 @@
                             Looks good!
                         </div>
                         <div class="invalid-feedback">
-                            Please select a valid country.
+                            Please select a valid date of birth.
                         </div>
                     </div>
                 </div>
@@ -353,6 +452,11 @@
                         <div class="invalid-feedback">
                             Please select a valid examination type.
                         </div>
+                        @error('examination_type')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3">
                         <label for="examinationYear" class="form-label fw-medium">Exam Year</label>
@@ -368,28 +472,38 @@
                         <div class="invalid-feedback">
                             Please select a valid exam year.
                         </div>
+                        @error('examination_year')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-3">
                         <label for="examinationNumber" class="form-label fw-medium">Exam No.</label>
                         <input type="text" class="form-control bg-light" id="examinationNumber"
-                            placeholder="Enter Exam No." required>
+                            placeholder="Enter Exam No." name="examination_number" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                         <div class="invalid-feedback">
                             Examination number field required.
                         </div>
+                        @error('examination_number')
+                            <span class="fs-6" role="alert" style="color: red; font-size: 12px">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                 </div>
 
-                <div class="row mb-5">
+                <div class="row mb-5" id="addSubjectDiv">
                     <div class="mb-3">
                         <h4 class="fw-bold">First Sitting</h4>
                         <hr>
                     </div>
-                    <div class="col-md-3">
-                        <label for="subject" class="form-label fw-medium">Subject</label>
-                        <input type="text" class="form-control bg-light" name="subject" id="subject"
+                    <div class="col-md-3 mb-4">
+                        <label for="subject1" class="form-label fw-medium">Subject</label>
+                        <input type="text" class="form-control bg-light" name="subject1" id="subject1"
                             placeholder="Enter Subject" required>
                         <div class="valid-feedback">
                             Looks good!
@@ -398,10 +512,10 @@
                             Subject field required.
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <label for="grade" class="form-label fw-medium">Grade</label>
-                        <input type="text" class="form-control bg-light" id="grade" name="grade" placeholder="Enter Grade"
-                            required>
+                    <div class="col-md-3 mb-4">
+                        <label for="grade1" class="form-label fw-medium">Grade</label>
+                        <input type="text" class="form-control bg-light" id="grade1" name="grade1"
+                            placeholder="Enter Grade" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -418,8 +532,10 @@
                 </div>
 
                 <div class="col-12 d-flex justify-content-center">
-                    <button class="btn" type="submit" style="background-color: #29166F; color: white;">Submit
-                        Application</button>
+                    <button class="btn" type="submit" style="background-color: #29166F; color: white;"
+                        onclick="subjectsAndGrades()">Submit
+                        Application
+                    </button>
                 </div>
             </form>
         </div>
@@ -441,8 +557,7 @@
         integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous">
     </script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous">
-    </script>
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script>
         (() => {
             'use strict'
@@ -479,6 +594,99 @@
                 }
             }
         });
+    </script>
+    <script>
+        const addSubjectBtn = document.getElementById("addSubjectBtn");
+        const addSubjectDiv = document.getElementById("addSubjectDiv");
+        let counter = 2;
+
+        // Event delegation for handling "Remove" button clicks
+        addSubjectDiv.addEventListener("click", function(event) {
+            if (event.target.classList.contains("remove-btn")) {
+                event.target.closest(".row").remove();
+            }
+        });
+
+        addSubjectBtn.addEventListener("click", function() {
+            // Create the new row
+            const newRow = document.createElement("div");
+            newRow.className = "row mb-3";
+
+            // Create the Subject column
+            const subjectCol = document.createElement("div");
+            subjectCol.className = "col-md-3";
+            subjectCol.innerHTML = `
+                <label for="subject${counter}" class="form-label fw-medium">Subject</label>
+                <input type="text" class="form-control bg-light" name="subject${counter}" id="subject${counter}"
+                    placeholder="Enter Subject" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Subject field required.
+                </div>
+            `;
+
+            // Create the Grade column
+            const gradeCol = document.createElement("div");
+            gradeCol.className = "col-md-3";
+            gradeCol.innerHTML = `
+                <label for="grade${counter}" class="form-label fw-medium">Grade</label>
+                <input type="text" class="form-control bg-light" id="grade${counter}" name="grade${counter}"
+                    placeholder="Enter Grade" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Grade field required.
+                </div>
+            `;
+
+            const timesBtn = document.createElement("div");
+            timesBtn.className = "col-md-3 pt-4";
+            timesBtn.innerHTML = `
+                <button type="button" class="btn remove-btn">×</button>
+            `;
+
+            // Appending subjects, grades and times buttons columns to the new row
+            newRow.appendChild(subjectCol);
+            newRow.appendChild(gradeCol);
+            newRow.appendChild(timesBtn);
+
+            // Appending the new row to the addSubjectDiv
+            addSubjectDiv.appendChild(newRow);
+            counter++;
+        });
+
+        function subjectsAndGrades() {
+            const inputs = document.querySelectorAll('input[name^="subject"], input[name^="grade"]');
+            const data = [];
+
+            for (let i = 0; i < inputs.length; i += 2) {
+                const subjectInput = inputs[i];
+                const gradeInput = inputs[i + 1];
+
+                const subjectValue = subjectInput.value;
+                const gradeValue = gradeInput.value;
+
+                const newData = {
+                    subject: subjectValue,
+                    grade: gradeValue
+                };
+
+                data.push(newData);
+            }
+
+            console.log(data, JSON.stringify(data))
+            document.getElementById('examTitleAndScore').value = JSON.stringify(data);
+        }
+    </script>
+    <script>
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove();
+            });
+        }, 4000);
     </script>
 </body>
 
