@@ -1,3 +1,27 @@
+# TECHiT Assessment
+This is an assessment from TECHiT that consist of a single page web application form for registration/application.
+
+## Requirements
+	This application is written in PHP(Laravel framework)
+ - PHP 8.1
+ - Composer
+ - DB/DBMS (MySQL)
+ - Laravel 10.10
+
+## Steps for successful running locally
+	After the above requirements in place,
+1. Clone the project to your project director "git clone https://github.com/Abdul-ahmed/techitassessment.git"
+2. Navigate inside the project and run "composer install"
+3. Create ".env" file out of ".env.example"
+4. Create your database with your preferred database name quivalent to "DB_DATABASE=techitassessment" and set other credential as required
+5. Run migration "php artisan migrate"
+6. Seed the required and default data "php artisan db:seed"
+7. Then you're good to go. You can either serve the app "php artisan serve" or run as required by you
+
+Thanks.
+======
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
